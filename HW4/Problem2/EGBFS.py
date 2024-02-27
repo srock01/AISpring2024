@@ -42,7 +42,7 @@ class MazeGame:
         self.rows = len(maze)
         self.cols = len(maze[0])
 
-        #### Start state: (0,0) or top left        
+        #### Start state: (4,2) or top left        
         self.agent_pos = (4, 2)
         
         #### Goal state:  (rows-1, cols-1) or bottom right
@@ -83,7 +83,7 @@ class MazeGame:
 
 
     ############################################################
-    #### Manhattan distance
+    #### Euclidean distance
     ############################################################
     def heuristic(self, pos):
         return 0
@@ -91,7 +91,7 @@ class MazeGame:
 
 
     ############################################################
-    #### A* Algorithm
+    #### GBFS* Algorithm
     ############################################################
     def find_path(self):
         open_set = PriorityQueue()
@@ -110,7 +110,7 @@ class MazeGame:
                 break
 
             
-            #### Agent goes E, W, N, and S, whenever possible
+            #### Agent goes in every direction (8) whenever possible
             for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0),(1, 1), (-1, -1), (1, -1), (-1, 1)]:
                 new_pos = (current_pos[0] + dx, current_pos[1] + dy)
 

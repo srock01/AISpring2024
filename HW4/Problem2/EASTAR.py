@@ -114,7 +114,7 @@ class MazeGame:
 
             moves = np.array([(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)])
             np.random.shuffle(moves)
-            #### Agent goes E, W, N, and S, whenever possible
+            #### Agent goes in every direction (8) whenever possible
             for dx, dy in moves:
                 new_pos = (current_pos[0] + dx, current_pos[1] + dy)
 
