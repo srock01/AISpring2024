@@ -42,7 +42,7 @@ class MazeGame:
         self.rows = len(maze)
         self.cols = len(maze[0])
 
-        #### Start state: (0,0) or top left        
+        #### Start state: (4,2)        
         self.agent_pos = (4, 2)
         
         #### Goal state:  (rows-1, cols-1) or bottom right

@@ -7,6 +7,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image, ImageOps 
 from queue import PriorityQueue
+import numpy
 
 
 ######################################################
@@ -42,7 +43,7 @@ class MazeGame:
         self.rows = len(maze)
         self.cols = len(maze[0])
 
-        #### Start state: (0,0) or top left        
+        #### Start state: (4,2) or top left        
         self.agent_pos = (4, 2)
         
         #### Goal state:  (rows-1, cols-1) or bottom right
@@ -91,7 +92,7 @@ class MazeGame:
 
 
     ############################################################
-    #### A* Algorithm
+    #### GBFS* Algorithm
     ############################################################
     def find_path(self):
         open_set = PriorityQueue()
