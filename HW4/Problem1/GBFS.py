@@ -43,8 +43,8 @@ class MazeGame:
         self.rows = len(maze)
         self.cols = len(maze[0])
 
-        #### Start state: (4,2) or top left        
-        self.agent_pos = (4, 2)
+        #### Start state: (0,0) or top left        
+        self.agent_pos = (0, 0)
         
         #### Goal state:  (rows-1, cols-1) or bottom right
         self.goal_pos = (self.rows - 1, self.cols - 1)
@@ -87,7 +87,7 @@ class MazeGame:
     #### Manhattan distance
     ############################################################
     def heuristic(self, pos):
-        return 0
+        return (abs(pos[0] - self.goal_pos[0]) + abs(pos[1] - self.goal_pos[1]))
 
 
 
@@ -128,8 +128,8 @@ class MazeGame:
                         ### Update the heurstic h()
                         self.cells[new_pos[0]][new_pos[1]].h = self.heuristic(new_pos)
                         
-                        ### Update the evaluation function for the cell n: f(n) = g(n) + h(n)
-                        self.cells[new_pos[0]][new_pos[1]].f = new_g + self.cells[new_pos[0]][new_pos[1]].h
+                        ### Update the evaluation function for the cell n: f(n) = h(n)
+                        self.cells[new_pos[0]][new_pos[1]].f = self.cells[new_pos[0]][new_pos[1]].h
                         self.cells[new_pos[0]][new_pos[1]].parent = current_cell
                         
                         #### Add the new cell to the priority queue
