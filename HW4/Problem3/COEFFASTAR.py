@@ -83,7 +83,7 @@ class MazeGame:
 
 
     ############################################################
-    #### Manhattan distance
+    #### Manhattan distance 
     ############################################################
     def heuristic(self, pos):
         return (abs(pos[0] - self.goal_pos[0]) + abs(pos[1] - self.goal_pos[1]))
