@@ -7,6 +7,10 @@
 import tkinter as tk
 from PIL import ImageTk, Image, ImageOps 
 from queue import PriorityQueue
+import math
+
+import numpy as np
+
 
 
 ######################################################
@@ -42,8 +46,8 @@ class MazeGame:
         self.rows = len(maze)
         self.cols = len(maze[0])
 
-        #### Start state: (4,2) or top left        
-        self.agent_pos = (4, 2)
+        #### Start state: (0,0) or top left        
+        self.agent_pos = (0, 0)
         
         #### Goal state:  (rows-1, cols-1) or bottom right
         self.goal_pos = (self.rows - 1, self.cols - 1)
@@ -84,9 +88,9 @@ class MazeGame:
 
     ############################################################
     #### Euclidean distance
-    ############################################################
+    ############################################################        
     def heuristic(self, pos):
-        return 0
+        return math.sqrt((pos[0] - self.goal_pos[0])**2 + (pos[1] - self.goal_pos[1])**2)
 
 
 
@@ -109,9 +113,10 @@ class MazeGame:
                 self.reconstruct_path()
                 break
 
-            
+            moves = np.array([(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)])
+            np.random.shuffle(moves)
             #### Agent goes in every direction (8) whenever possible
-            for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0),(1, 1), (-1, -1), (1, -1), (-1, 1)]:
+            for dx, dy in moves:
                 new_pos = (current_pos[0] + dx, current_pos[1] + dy)
 
                 if 0 <= new_pos[0] < self.rows and 0 <= new_pos[1] < self.cols and not self.cells[new_pos[0]][new_pos[1]].is_wall:
@@ -127,8 +132,8 @@ class MazeGame:
                         ### Update the heurstic h()
                         self.cells[new_pos[0]][new_pos[1]].h = self.heuristic(new_pos)
                         
-                        ### Update the evaluation function for the cell n: f(n) = g(n) + h(n)
-                        self.cells[new_pos[0]][new_pos[1]].f = new_g + self.cells[new_pos[0]][new_pos[1]].h
+                        ### Update the evaluation function for the cell n: f(n) = h(n)
+                        self.cells[new_pos[0]][new_pos[1]].f = self.cells[new_pos[0]][new_pos[1]].h
                         self.cells[new_pos[0]][new_pos[1]].parent = current_cell
                         
                         #### Add the new cell to the priority queue
@@ -149,7 +154,7 @@ class MazeGame:
 
             # Redraw cell with updated g() and h() values
             self.canvas.create_rectangle(y * self.cell_size, x * self.cell_size, (y + 1) * self.cell_size, (x + 1) * self.cell_size, fill='skyblue')
-            text = f'g={self.cells[x][y].g}\nh={self.cells[x][y].h}'
+            text = f'g={self.cells[x][y].g}\nh={round(self.cells[x][y].h, 2)}'
             self.canvas.create_text((y + 0.5) * self.cell_size, (x + 0.5) * self.cell_size, font=("Purisa", 12), text=text)
 
 
